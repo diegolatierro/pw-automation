@@ -19,3 +19,8 @@ test('Verify toogle message on menu', async({page}) =>{
     const pm = new PageManager(page)
     await pm.onPracticeForm().verifyContentMenuHidingOption()
 })
+
+test('Verify the values of dropdown', async({page}) =>{
+    const pm = new PageManager(page)
+    await pm.onPracticeForm().verifyValuesInDropDown()
+})

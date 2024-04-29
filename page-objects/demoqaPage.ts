@@ -48,13 +48,29 @@ export class DemoQAPage extends HelperBase{
         await this.page.waitForFunction(() => {
             const label = document.querySelector('.lwptoc_toggle_label');
             return label && label.textContent && label.textContent.trim() === 'show';
-        });
+    });
         
         // Validate that the toggle label now says "show"
         const toggleLabelText = await toggleLabel.textContent();
         expect(toggleLabelText).toContain('show');
     }
     
+    async verifyValuesInDropDown(){
+        await this.page.goto('https://ultimateqa.com/simple-html-elements-for-automation/')
+        const dropDownMenu = await this.page.locator('.et_pb_blurb_description select')
+        // Evaluate a function in the browser context to retrieve the options
+        const options = await dropDownMenu.evaluate((select) => {
+            const optionElements = select.querySelectorAll('option');
+            return Array.from(optionElements).map(option => option.textContent);
+        });
+
+        // Define the expected values
+        const expectedValues = ['Volvo', 'Saab', 'Opel', 'Audi'];
+
+        // Compare the actual and expected values
+        expect(options).toEqual(expectedValues);
+    }
+
 
     async getResult(): Promise<string> {
         return new Promise<string>((resolve) => {
