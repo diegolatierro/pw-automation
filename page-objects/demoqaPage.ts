@@ -37,7 +37,24 @@ export class DemoQAPage extends HelperBase{
         expect(toggleMessageText).toContain('Inside of toggle');
     }
     
-
+    async verifyContentMenuHidingOption() {
+        // Locate the toggle label element
+        const toggleLabel = await this.page.locator('.lwptoc_toggle_label').first();
+    
+        // Click on the toggle label to hide the content menu
+        await toggleLabel.click();
+    
+        // Wait for the toggle label text to change
+        await this.page.waitForFunction(() => {
+            const label = document.querySelector('.lwptoc_toggle_label');
+            return label && label.textContent && label.textContent.trim() === 'show';
+        });
+        
+        // Validate that the toggle label now says "show"
+        const toggleLabelText = await toggleLabel.textContent();
+        expect(toggleLabelText).toContain('show');
+    }
+    
 
     async getResult(): Promise<string> {
         return new Promise<string>((resolve) => {

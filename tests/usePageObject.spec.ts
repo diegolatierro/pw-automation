@@ -14,3 +14,8 @@ test('Verify toogle message', async({page}) =>{
     const pm = new PageManager(page)
     await pm.onPracticeForm().verifyToggleMessage()
 })
+
+test('Verify toogle message on menu', async({page}) =>{
+    const pm = new PageManager(page)
+    await pm.onPracticeForm().verifyContentMenuHidingOption()
+})
